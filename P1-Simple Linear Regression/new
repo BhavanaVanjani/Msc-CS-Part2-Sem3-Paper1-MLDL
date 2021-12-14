@@ -1,0 +1,127 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+In [2]:
+
+dataset = pd.read_csv('/content/Salary_Data.csv')
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+In [3]:
+
+print(X)
+[[ 1.1]
+ [ 1.3]
+ [ 1.5]
+ [ 2. ]
+ [ 2.2]
+ [ 2.9]
+ [ 3. ]
+ [ 3.2]
+ [ 3.2]
+ [ 3.7]
+ [ 3.9]
+ [ 4. ]
+ [ 4. ]
+ [ 4.1]
+ [ 4.5]
+ [ 4.9]
+ [ 5.1]
+ [ 5.3]
+ [ 5.9]
+ [ 6. ]
+ [ 6.8]
+ [ 7.1]
+ [ 7.9]
+ [ 8.2]
+ [ 8.7]
+ [ 9. ]
+ [ 9.5]
+ [ 9.6]
+ [10.3]
+ [10.5]]
+In [4]:
+
+print(y)
+[ 39343.  46205.  37731.  43525.  39891.  56642.  60150.  54445.  64445.
+  57189.  63218.  55794.  56957.  57081.  61111.  67938.  66029.  83088.
+  81363.  93940.  91738.  98273. 101302. 113812. 109431. 105582. 116969.
+ 112635. 122391. 121872.]
+In [5]:
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+In [6]:
+
+print(X_train)
+[[ 5.3]
+ [ 7.9]
+ [ 2.9]
+ [ 5.1]
+ [ 3.2]
+ [ 4.5]
+ [ 8.2]
+ [ 6.8]
+ [ 1.3]
+ [10.5]
+ [ 3. ]
+ [ 2.2]
+ [ 5.9]
+ [ 6. ]
+ [ 3.7]
+ [ 3.2]
+ [ 9. ]
+ [ 2. ]
+ [ 1.1]
+ [ 7.1]
+ [ 4.9]
+ [ 4. ]]
+In [7]:
+
+print(y_train)
+[ 83088. 101302.  56642.  66029.  64445.  61111. 113812.  91738.  46205.
+ 121872.  60150.  39891.  81363.  93940.  57189.  54445. 105582.  43525.
+  39343.  98273.  67938.  56957.]
+In [8]:
+
+print(X_test)
+[[ 1.5]
+ [10.3]
+ [ 4.1]
+ [ 3.9]
+ [ 9.5]
+ [ 8.7]
+ [ 9.6]
+ [ 4. ]]
+In [9]:
+
+print(y_test)
+[ 37731. 122391.  57081.  63218. 116969. 109431. 112635.  55794.]
+In [10]:
+
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()
+regressor.fit(X_train,y_train)
+​
+Out[10]:
+LinearRegression()
+In [11]:
+
+y_pred = regressor.predict(X_test)
+​
+In [12]:
+
+plt.scatter(X_train, y_train, color = 'green')
+plt.plot(X_train, regressor.predict(X_train), color = 'purple')
+plt.title('Salary vs Experience (Training Dataset)')  
+plt.xlabel('Years of Experience')  
+plt.ylabel('Salary')  
+plt.show() 
+
+In [13]:
+
+plt.scatter(X_test, y_test, color = 'green')   
+plt.plot(X_train, regressor.predict(X_train), color = 'purple')
+plt.title('Salary vs Experience (Test Dataset)')  
+plt.xlabel('Years of Experience')  
+plt.ylabel('Salary')  
+plt.show()  
